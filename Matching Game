@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div#matchGame{
+	background:lightblue;
+	border:#999 1px solid;
+	width:600px;
+	height:500px;
+	padding:24px;
+	margin:0px auto;
+    border-radius: 15px;
+}
+div#matchGame > div{
+	background: url() no-repeat;
+	border:#000 1px solid;
+	width:69px;
+	height:82px;
+	float:left;
+	margin:18px;
+	padding:20px;
+    padding-top: 20px;
+	font-size:35px;
+	cursor:pointer;
+	text-align:center;
+    border-radius: 40px;
+}
+    body{
+        background-color:#979;
+    }
+    h1{
+        text-align:center;
+        font-size:40px;
+        padding-bottom: -10px;
+    }
+</style>
+<script>
+
+function newGame(){
+	tiles_flipped = 0;
+	var output = '';
+	for(var i = 0; i < names_array.length; i++){
+		output += '<div id="tile_'+i+'" onclick="memoryFlipTile(this,\''+names_array[i]+'\')"></div>';
+	}
+	document.getElementById('matchGame').innerHTML = output;
+}
+    
+    var names_array = ['DOG','DOG','CAT','CAT','PIG','PIG','RAT','RAT','OWL','OWL','BUG','BUG'];
+var memory_values = [];
+var memory_tile_ids = [];
+var tiles_flipped = 0;
+Array.prototype.memory_tile_shuffle = function(){
+    var i = this.length, j, temp;
+    while(--i > 0){
+        j = Math.floor(Math.random() * (i+1));
+        temp = this[j];
+        this[j] = this[i];
+        this[i] = temp;
+    }
+}
+    
+function memoryFlipTile(tile,val){
+	if(tile.innerHTML == "" && memory_values.length < 2){
+		tile.style.background = '#FF7';
+		tile.innerHTML = val;
+		if(memory_values.length == 0){
+			memory_values.push(val);
+			memory_tile_ids.push(tile.id);
+		} else if(memory_values.length == 1){
+			memory_values.push(val);
+			memory_tile_ids.push(tile.id);
+			if(memory_values[0] == memory_values[1]){
+				tiles_flipped += 2;
+				memory_values = [];
+            	memory_tile_ids = [];
+				if(tiles_flipped == memory_array.length){
+					document.getElementById('matchGame').innerHTML = "";
+					newGame();
+				}
+} else {
+function changeBack(){
+	var tile_1 = document.getElementById(memory_tile_ids[0]);
+		var tile_2 = document.getElementById(memory_tile_ids[1]);
+		 tile_1.style.background = 'url(https://www.apollodesign.net/media/catalog/product/cache/4/image/800x800/9df78eab33525d08d6e5fb8d27136e95/s/r/sr-0206-ace-of-clubs.png) no-repeat';
+        	    tile_1.innerHTML = "";
+		    tile_2.style.background = 'url(https://www.apollodesign.net/media/catalog/product/cache/4/image/800x800/9df78eab33525d08d6e5fb8d27136e95/s/r/sr-0206-ace-of-clubs.png) no-repeat';
+         	    tile_2.innerHTML = "";
+		    memory_values = [];
+         	    memory_tile_ids = [];
+				}
+				setTimeout(changeBack, 800);
+			}
+		}
+	}
+}
+</script>
+</head>
+<body>
+    <h1> Matching Game</h1>
+    <h2>Time:</h2>
+<div id="matchGame"></div>
+<script>newGame();</script>
+</body>
+</html>
